@@ -11,21 +11,27 @@ namespace TestConsoleUI
         static void Main(string[] args)
         {
             IUserService _userManager = new UserManager(new EfUserDal());
-          
-            _userManager.Add(new User
+
+            //var result= _userManager.Add(new User
+            // {
+            //     FirstName = "Emin",
+            //     LastName = "Binici",
+            //     Email = "emin.binici34@gmail.com",
+            //     Password = "1234",
+            //     Telephone = "12345",
+            //     CreateDate = DateTime.Now.ToUniversalTime(),
+            //     UpdateDate= DateTime.Now.ToUniversalTime(),
+            //     IsActive=true
+            // }) ;
+
+
+            // Console.WriteLine(result.Message);
+            var result = _userManager.GetBasketDetail(11);
+            Console.WriteLine(result.Message);
+            foreach (var product in result.Data)
             {
-                FirstName = "Emin",
-                LastName = "Binici",
-                Email = "emin.binici34@gmail.com",
-                Password = "1234",
-                Telephone = "12345",
-                CreateDate = DateTime.Now.ToUniversalTime(),
-                UpdateDate= DateTime.Now.ToUniversalTime(),
-                IsActive=true
-            }) ;
-
-     
-
+                Console.WriteLine(product.ProductId + "\n" + product.ProductModel + "\n" + product.ImageUrl + "\n" + product.ProductPrice + "\n" + product.Quantity);
+            }
             Console.WriteLine("Hello World!");
         }
     }

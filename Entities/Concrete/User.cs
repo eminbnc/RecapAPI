@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Entities.Concrete
 {
-    public class User:IEntity
+    public class User : IEntity
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -17,5 +17,6 @@ namespace Entities.Concrete
         public bool IsAdmin { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
+        public string ProfilPhotoUrl { get; set; }
     }
 }
