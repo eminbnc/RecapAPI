@@ -19,8 +19,8 @@ namespace TestConsoleUI
             //     Email = "emin.binici34@gmail.com",
             //     Password = "1234",
             //     Telephone = "12345",
-            //     CreateDate = DateTime.Now.ToUniversalTime(),
-            //     UpdateDate= DateTime.Now.ToUniversalTime(),
+            //     CreateDate = DateTime.Now,
+            //     UpdateDate= DateTime.Now,
             //     IsActive=true
             // }) ;
 

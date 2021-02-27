@@ -20,22 +20,19 @@ namespace Business.Concrete
         }
         public IResult Add(User user)
         {
-            //_userDal.Add(user);
-            return new ErrorResult("deneme");
+            user.CreateDate = DateTime.Now;
+            user.UpdateDate = DateTime.Now;
+            _userDal.Add(user);
+            return new SuccessResult(Messages.UserAdded);
         }
 
         public IDataResult<List<User>> GetAll()
         {
-            try
-            {
+           
                 var result = _userDal.GetAll();
                 return new SuccessDataResult<List<User>>(result, Messages.UserList);
-            }
-            catch (Exception exception)
-            {
-
-                throw;
-            }
+            
+          
         }
 
         public IDataResult<List<ProductsInBasketDTO>> GetBasketDetail(int id)
@@ -45,7 +42,7 @@ namespace Business.Concrete
 
         public IDataResult<User> GetById(int id)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<User>(_userDal.Get(p => p.Id == id), Messages.SuccessUserData);
         }
 
         public IResult Update(User user)
