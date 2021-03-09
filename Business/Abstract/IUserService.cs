@@ -1,6 +1,5 @@
-﻿using Core.Utilities.Results;
-using Entities.Concrete;
-using Entities.DTOs;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,10 +8,8 @@ namespace Business.Abstract
 {
     public interface IUserService
     {
-       IResult Add(User user);
-        IDataResult<User> GetById(int id);
-        IDataResult<List<User>> GetAll();
-        IResult Update(User user);
-        IDataResult<List<ProductsInBasketDTO>> GetBasketDetail(int id);
+        IDataResult<List<OperationClaim>> GetClaims(User user);
+        IResult Add(User user);
+        IDataResult<User> GetByMail(string email);
     }
 }
