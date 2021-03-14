@@ -1,6 +1,10 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -17,14 +21,16 @@ namespace Business.Concrete
     public class ProductManager:IProductService
     {
         IProductDal _productDal;
-        ISubCategoryService _SubCategoryService;
+        ISubCategoryService _subCategoryService;
         public ProductManager(IProductDal productDal,ISubCategoryService subCategoryService)
         {
             _productDal = productDal;
-            _SubCategoryService = subCategoryService;
+            _subCategoryService = subCategoryService;
         }
-
-        [ValidationAspect(typeof(ProductValidator))]
+        [PerformanceAspect(50)]
+        [CacheRemoveAspect("IProductService.Get",Priority =3)]
+        [SecuredOperation("product.add,admin",Priority =1)]
+        [ValidationAspect(typeof(ProductValidator),Priority =2)]
         public IResult Add(Product product)
         {
             IResult result = BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.SubCategoryId), CheckIfProductNameExists(product.ProductName), IsSubCategoryActive(product.SubCategoryId));
@@ -36,16 +42,17 @@ namespace Business.Concrete
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
         }
-
+        [CacheAspect(30,Priority =1)]
         public IDataResult<List<Product>> GetAll()
         {
+            var result = _productDal.GetAll();
             if (DateTime.Now.Hour == 16)
             {
-                return new ErrorDataResult<List<Product>>(null,Messages.MaintenanceTime);
+                return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             }
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll(), Messages.ProductList);
+            return new SuccessDataResult<List<Product>>(result, Messages.ProductList);
         }
-
+        [CacheAspect(30, Priority = 1)]
         public IDataResult<List<Product>> GetAllByCategoryId(int id)
         {
             throw new NotImplementedException();
@@ -69,6 +76,24 @@ namespace Business.Concrete
         public IDataResult<List<ProductsInBasketDTO>> GetProductDetails()
         {
             throw new NotImplementedException();
+        }
+        [TransactionScopeAspect]
+        public IResult TestTransaction(Product product)
+        {
+            var result = BusinessRules.Run(CheckIfProductNameExists(product.ProductName));
+            if (result != null)
+            {
+                throw new Exception(Messages.ProductNameAlreadyExists);
+            }
+            _productDal.Add(product);
+            var result1 = BusinessRules.Run(CheckIfProductNameExists(product.ProductName));
+            if (result1 != null)
+            {
+                throw new Exception(Messages.ProductNameAlreadyExists);
+            }
+            _productDal.Add(product);
+
+            return new ErrorResult();
         }
 
         public IResult Update(Product product)
@@ -95,12 +120,12 @@ namespace Business.Concrete
         }
         private IResult IsSubCategoryActive(int subCategoryId)
         {
-            var result = _SubCategoryService.GetById(subCategoryId);
+            var result = _subCategoryService.GetById(subCategoryId);
             if (result.Data.IsActive==true)
             {
                 return new SuccessResult();
             }
-            return new ErrorResult();
+            return new ErrorResult(Messages.SubCategoryNotActive);
         }
     }
 }

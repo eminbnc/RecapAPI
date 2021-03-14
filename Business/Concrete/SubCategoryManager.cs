@@ -22,7 +22,7 @@ namespace Business.Concrete
             {
                 return new SuccessDataResult<SubCategory>(result);
             }
-            return new ErrorDataResult<SubCategory>();
+            return new ErrorDataResult<SubCategory>(result);
         }
     }
 }
