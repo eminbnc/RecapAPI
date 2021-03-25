@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,5 +26,16 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Category>(_categoryDal.Get(c => c.Id == id));
         }
+
+        public IDataResult<List<CategoryWithSubCategoryDTO>> GetAllCategoriesWithSubCategories()
+        {
+            var result = _categoryDal.GetCategoriesWithSubCategories();
+            if (result != null)
+            {
+                return new SuccessDataResult<List<CategoryWithSubCategoryDTO>>(result,Messages.SuccessAllCategories);
+            }
+            return new ErrorDataResult<List<CategoryWithSubCategoryDTO>>(result, Messages.ErrorAllCategories);
+        }
+       
     }
 }

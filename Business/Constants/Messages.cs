@@ -21,11 +21,12 @@ namespace Business.Constants
         public static string ProductNameAlreadyExists = "Aynı isimde ürün mevcut";
 
         public static string GetProduct = "Ürün getirildi";
+        
 
         public static string MaintenanceTime = "Sistem Bakımda";
 
         public static string ProductList = "Ürünler listelendi";
-
+        public static string ProductsNotFound = "Ürün bulunamadı";
         public static string AuthorizationDenied = "Yetkin yok";
         public static string GetUser = "Kulanıcı mevcut ve getirildi";
 
@@ -38,5 +39,14 @@ namespace Business.Constants
         public static string UserRegistered = "Kullanıcı kaydı başarılı";
 
         public static string SubCategoryNotActive = "Eklenmek istenen alt kategori aktif değil";
+
+        public static string SuccessAllCategories = "Kategoriler ve alt kagetorileri listelendi";
+        public static string ErrorAllCategories = "Kategoriler ve alt kategoriler bulunamadı";
+
+        public static string ErrorSubCategories = "işlem başarısız";
+        public static string GetSubCategories = "Alt kategoriler listelendi";
+
+        public static string GetBrands = "Markalar listlendi";
+        public static string ErroyGetBrands = "Marka bulunamadı";
     }
 }

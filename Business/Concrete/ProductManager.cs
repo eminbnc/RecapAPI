@@ -42,6 +42,17 @@ namespace Business.Concrete
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
         }
+
+        public IDataResult<List<BrandNameDTO>> BrandName()
+        {
+            var result = _productDal.GetBrands();
+            if (result != null)
+            {
+                return new SuccessDataResult<List<BrandNameDTO>>(result, Messages.GetBrands);
+            }
+            return new ErrorDataResult<List<BrandNameDTO>>(result, Messages.ErroyGetBrands);
+        }
+
         [CacheAspect(30,Priority =1)]
         public IDataResult<List<Product>> GetAll()
         {
@@ -52,8 +63,30 @@ namespace Business.Concrete
             }
             return new SuccessDataResult<List<Product>>(result, Messages.ProductList);
         }
+
+
         [CacheAspect(30, Priority = 1)]
-        public IDataResult<List<Product>> GetAllByCategoryId(int id)
+        public IDataResult<List<Product>> GetAllBySubCategoryId(int subCategoryId)
+        {
+            var result = _productDal.GetAll(p => p.SubCategoryId == subCategoryId);
+            if (result!=null)
+            {
+                return new SuccessDataResult<List<Product>>(result, Messages.ProductList);
+            }
+            return new ErrorDataResult<List<Product>>(result, Messages.ProductsNotFound);
+        }
+
+        public IDataResult<List<Product>> GetAllProductsByBrand(string brand)
+        {
+            var result = _productDal.GetAll(p => p.Brand == brand);
+            if (result!=null)
+            {
+                return new SuccessDataResult<List<Product>>(result, Messages.ProductList);
+            }
+            return new ErrorDataResult<List<Product>>(result, Messages.ProductsNotFound);
+        }
+
+        public IDataResult<List<Product>> GetAllSubCategoryByBrand(string brandName)
         {
             throw new NotImplementedException();
         }

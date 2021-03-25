@@ -38,6 +38,37 @@ namespace ETradeWebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("getbysubcategory")]
+        public IActionResult GetProductsBySubCategoryId(int id)
+        {
+            var result = _productService.GetAllBySubCategoryId(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("getbrands")]
+        public IActionResult GetBrands()
+        {
+            var result = _productService.BrandName();
+            if (result!=null)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("productsbybrand")]
+        public IActionResult GetProductsBtBrand(string brand)
+        {
+            var result = _productService.GetAllProductsByBrand(brand);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
         [HttpPost("testtransaction")]
         public IActionResult TransactionTest(Product product)
         {
