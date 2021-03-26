@@ -39,9 +39,9 @@ namespace ETradeWebAPI.Controllers
             return BadRequest(result);
         }
         [HttpGet("getbysubcategory")]
-        public IActionResult GetProductsBySubCategoryId(int id)
+        public IActionResult GetProductsBySubCategoryId(int subCategoryId)
         {
-            var result = _productService.GetAllBySubCategoryId(id);
+            var result = _productService.GetAllBySubCategoryId(subCategoryId);
             if (result.Success)
             {
                 return Ok(result);
@@ -52,17 +52,37 @@ namespace ETradeWebAPI.Controllers
         public IActionResult GetBrands()
         {
             var result = _productService.BrandName();
-            if (result!=null)
+            if (result.Success)
             {
                 return Ok(result);
             }
             return BadRequest(result);
         }
         [HttpGet("productsbybrand")]
-        public IActionResult GetProductsBtBrand(string brand)
+        public IActionResult GetProductsOfBrand(string brand)
         {
             var result = _productService.GetAllProductsByBrand(brand);
-            if (result != null)
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("productsofcategory")]
+        public IActionResult GetProductsOfCategory(int categoryId)
+        {
+            var result = _productService.GetProductsOfCategory(categoryId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+        [HttpGet("getbyunitprice")]
+        public IActionResult GetByUnitPrice(decimal min, decimal max)
+        {
+            var result = _productService.GetByUnitPrice(min, max);
+            if (result.Success)
             {
                 return Ok(result);
             }

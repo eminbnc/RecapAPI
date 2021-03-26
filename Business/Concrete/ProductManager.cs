@@ -98,6 +98,13 @@ namespace Business.Concrete
 
         public IDataResult<List<Product>> GetByUnitPrice(decimal min, decimal max)
         {
+            if (min>max)
+            {
+                decimal temp;
+                temp = max;
+                max = min;
+                min = temp;
+            }
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max));
         }
 
@@ -110,6 +117,17 @@ namespace Business.Concrete
         {
             throw new NotImplementedException();
         }
+
+        public IDataResult<List<Product>> GetProductsOfCategory(int categoryId)
+        {
+            var result = _productDal.GetProductsOfCategory(categoryId);
+            if (result!=null)
+            {
+                return new SuccessDataResult<List<Product>>(result, Messages.ProductList);
+            }
+            return new ErrorDataResult<List<Product>>(result, Messages.ErrorProductList);
+        }
+
         [TransactionScopeAspect]
         public IResult TestTransaction(Product product)
         {

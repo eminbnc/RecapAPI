@@ -48,5 +48,7 @@ namespace Business.Constants
 
         public static string GetBrands = "Markalar listlendi";
         public static string ErroyGetBrands = "Marka bulunamadı";
+
+        public static string ErrorProductList = "Ürünler bulunamadı";
     }
 }
