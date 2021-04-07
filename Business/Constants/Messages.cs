@@ -50,5 +50,9 @@ namespace Business.Constants
         public static string ErroyGetBrands = "Marka bulunamadı";
 
         public static string ErrorProductList = "Ürünler bulunamadı";
+
+        public static string CartAddSuccessful = "Ürün Sepete Başarılı Bir Şekilde Eklendi";
+
+        public static string CartAddError = "Sepete ekleme işlemi başarısız";
     }
 }

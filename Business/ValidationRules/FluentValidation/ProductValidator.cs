@@ -16,7 +16,7 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(p => p.UnitPrice).GreaterThan(p=>p.Discount).GreaterThan(0);
             RuleFor(P => P.Brand).NotEmpty();
             RuleFor(P => P.Description).NotEmpty();
-            RuleFor(P => P.ImageUrl).NotEmpty();
+
             RuleFor(P => P.Stock).NotEmpty();
             RuleFor(P => P.Tax).NotEmpty();
             RuleFor(P => P.SubCategoryId).NotEmpty();

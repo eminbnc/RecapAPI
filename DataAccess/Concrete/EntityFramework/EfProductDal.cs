@@ -40,7 +40,6 @@ namespace DataAccess.Concrete.EntityFramework
                                  Brand = p.Brand,
                                  Description = p.Description,
                                  Discount=p.Discount,
-                                 ImageUrl=p.ImageUrl,
                                  IsActive=p.IsActive,
                                  Model=p.Model,
                                  Stock=p.Stock,

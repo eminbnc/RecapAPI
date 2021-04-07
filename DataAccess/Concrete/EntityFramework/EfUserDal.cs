@@ -40,7 +40,6 @@ namespace DataAccess.Concrete.EntityFramework
                              {
                                  ProductId = p.Id,
                                  ProductModel = p.Model,
-                                 ImageUrl = p.ImageUrl,
                                  ProductPrice = p.UnitPrice,
                                  Quantity = b.Quantity
                              };

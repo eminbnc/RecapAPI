@@ -27,7 +27,9 @@ namespace Business.DependencyResolvers.AutofacBusinessModule
             builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
-
+            builder.RegisterType<EfBasketDal>().As<IBasketDal>().SingleInstance();
+            builder.RegisterType<CartManager>().As<ICartService>().SingleInstance();
+         
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

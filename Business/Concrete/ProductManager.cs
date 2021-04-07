@@ -29,7 +29,7 @@ namespace Business.Concrete
         }
         [PerformanceAspect(50)]
         [CacheRemoveAspect("IProductService.Get",Priority =3)]
-        [SecuredOperation("product.add,admin",Priority =1)]
+        //[SecuredOperation("product.add,admin",Priority =1)]
         [ValidationAspect(typeof(ProductValidator),Priority =2)]
         public IResult Add(Product product)
         {
@@ -57,7 +57,7 @@ namespace Business.Concrete
         public IDataResult<List<Product>> GetAll()
         {
             var result = _productDal.GetAll();
-            if (DateTime.Now.Hour == 16)
+            if (DateTime.Now.Hour == 10)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             }
